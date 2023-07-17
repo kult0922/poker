@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/kult0922/go-react-blog/backend/api/middlewares"
 	"github.com/kult0922/go-react-blog/backend/controllers"
 	"github.com/kult0922/go-react-blog/backend/services"
 )
@@ -20,5 +21,7 @@ func NewRouter(db *sql.DB) *mux.Router {
 	r.HandleFunc("/article/{id:[0-9]+}", aCon.ArticleDetailHandler).Methods(http.MethodGet)
 	r.HandleFunc("/article/nice", aCon.PostNiceHandler).Methods(http.MethodPost)
 	r.HandleFunc("/comment", cCon.PostCommentHandler).Methods(http.MethodPost)
+
+	r.Use(middlewares.LoggingMiddleware)
 	return r
 }
