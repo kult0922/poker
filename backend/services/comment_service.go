@@ -5,14 +5,9 @@ import (
 	"github.com/kult0922/go-react-blog/backend/repositories"
 )
 
-func PostCommentService(comment models.Comment) (models.Comment, error) {
-	db, err := connectDB()
-	if err != nil {
-		return models.Comment{}, err
-	}
-	defer db.Close()
+func (s *MyAppService) PostCommentService(comment models.Comment) (models.Comment, error) {
 
-	newComment, err := repositories.InsertComment(db, comment)
+	newComment, err := repositories.InsertComment(s.db, comment)
 	if err != nil {
 		return models.Comment{}, err
 	}

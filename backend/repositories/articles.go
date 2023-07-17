@@ -44,6 +44,7 @@ limit ? offset ?;
 
 	rows, err := db.Query(sqlStr, articleNumPerPage, ((page - 1) * articleNumPerPage))
 	if err != nil {
+		println(err)
 		return nil, err
 	}
 	defer rows.Close()
