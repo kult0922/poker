@@ -6,18 +6,18 @@ import (
 	"strconv"
 
 	"github.com/gorilla/mux"
+	"github.com/kult0922/go-react-blog/backend/controllers/services"
 	"github.com/kult0922/go-react-blog/backend/models"
-	"github.com/kult0922/go-react-blog/backend/services"
 )
 
 // 1. コントローラ構造体を定
 type MyAppController struct {
 	// 2. フィールドに MyAppService 構造体を含める
-	service *services.MyAppService
+	service services.MyAppServicer
 }
 
 // コンストラクタの定義
-func NewMyAppController(s *services.MyAppService) *MyAppController {
+func NewMyAppController(s services.MyAppServicer) *MyAppController {
 	return &MyAppController{service: s}
 }
 
