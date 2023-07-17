@@ -8,9 +8,7 @@ import (
 	"os"
 
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/kult0922/go-react-blog/backend/controllers"
-	"github.com/kult0922/go-react-blog/backend/routers"
-	"github.com/kult0922/go-react-blog/backend/services"
+	"github.com/kult0922/go-react-blog/backend/api"
 )
 
 var (
@@ -26,9 +24,8 @@ func main() {
 		log.Println("fail to connect DB")
 		return
 	}
-	ser := services.NewMyAppService(db)
-	con := controllers.NewMyAppController(ser)
-	r := routers.NewRouter(con)
+
+	r := api.NewRouter(db)
 
 	// log
 	log.Println("server start at port 8080")
