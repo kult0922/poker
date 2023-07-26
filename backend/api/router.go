@@ -12,15 +12,11 @@ import (
 
 func NewRouter(db *sql.DB) *mux.Router {
 	ser := services.NewMyAppService(db)
-	aCon := controllers.NewArticleController(ser)
-	cCon := controllers.NewCommentController(ser)
+	Con := controllers.NewHandController(ser)
 
 	r := mux.NewRouter()
-	r.HandleFunc("/article", aCon.PostArticleHandler).Methods(http.MethodPost)
-	r.HandleFunc("/article/list", aCon.ArticleListHandler).Methods(http.MethodGet)
-	r.HandleFunc("/article/{id:[0-9]+}", aCon.ArticleDetailHandler).Methods(http.MethodGet)
-	r.HandleFunc("/article/nice", aCon.PostNiceHandler).Methods(http.MethodPost)
-	r.HandleFunc("/comment", cCon.PostCommentHandler).Methods(http.MethodPost)
+	r.Use(middlewares.Cors)
+	r.HandleFunc("/hand", Con.HandHandler).Methods(http.MethodPost, http.MethodOptions)
 
 	r.Use(middlewares.LoggingMiddleware)
 	return r

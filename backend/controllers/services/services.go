@@ -2,13 +2,6 @@ package services
 
 import "github.com/kult0922/go-react-blog/backend/models"
 
-type ArticleServicer interface {
-	PostArticleService(article models.Article) (models.Article, error)
-	GetArticleListService(page int) ([]models.Article, error)
-	GetArticleService(articleID int) (models.Article, error)
-	PostNiceService(article models.Article) (models.Article, error)
-}
-
-type CommentServicer interface {
-	PostCommentService(comment models.Comment) (models.Comment, error)
+type HandServicer interface {
+	GetHandService(cards [5]models.Card) models.Hand
 }
