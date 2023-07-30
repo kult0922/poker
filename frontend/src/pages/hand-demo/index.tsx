@@ -51,7 +51,7 @@ export const HandDemo = () => {
     return (
       <div>
         <div>
-          <h1>{hand?.name}</h1>
+          <h1 className="">{hand?.name}</h1>
         </div>
         {data.map((e, idx) => {
           return (
