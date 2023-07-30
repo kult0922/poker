@@ -12,11 +12,13 @@ import (
 
 func NewRouter(db *sql.DB) *mux.Router {
 	ser := services.NewMyAppService(db)
-	Con := controllers.NewHandController(ser)
+	HandCon := controllers.NewHandController(ser)
+	DealCon := controllers.NewDealController(ser)
 
 	r := mux.NewRouter()
 	r.Use(middlewares.Cors)
-	r.HandleFunc("/hand", Con.HandHandler).Methods(http.MethodPost, http.MethodOptions)
+	r.HandleFunc("/hand", HandCon.HandHandler).Methods(http.MethodPost, http.MethodOptions)
+	r.HandleFunc("/community-card", DealCon.CommunityCardHandler).Methods(http.MethodGet, http.MethodOptions)
 
 	r.Use(middlewares.LoggingMiddleware)
 	return r
