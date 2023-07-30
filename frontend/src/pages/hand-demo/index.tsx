@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import useSWR from "swr";
+import { useEffect, useState } from 'react';
+import useSWR from 'swr';
 
 type Card = {
   suit: string;
@@ -13,25 +13,25 @@ type Hand = {
 
 const getHandName = (url: string, card: Card[]): Promise<Hand> =>
   fetch(url, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(card),
   }).then((res) => res.json());
 
 const getFetcher = (url: string): Promise<Card[]> =>
   fetch(url, {
-    method: "GET",
+    method: 'GET',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   }).then((res) => res.json());
 
 export const HandDemo = () => {
   const { data, isLoading } = useSWR(
-    "http://localhost:8080/community-card",
-    getFetcher
+    'http://localhost:8080/community-card',
+    getFetcher,
   );
 
   const [hand, setHand] = useState<Hand | undefined>();
@@ -39,7 +39,7 @@ export const HandDemo = () => {
 
   useEffect(() => {
     if (data) {
-      getHandName("http://localhost:8080/hand", data).then((res) => {
+      getHandName('http://localhost:8080/hand', data).then((res) => {
         console.log(res);
         setHand(res);
       });
@@ -53,15 +53,15 @@ export const HandDemo = () => {
         <div>
           <h1 className="">{hand?.name}</h1>
         </div>
-        {data.map((e, idx) => {
-          return (
-            <img
-              key={"card-" + idx}
-              src={`/cards/${e.rank}_of_${e.suit}s.svg`}
-              alt="card"
-            />
-          );
-        })}
+        <div className="flex">
+          {data.map((e, idx) => {
+            return (
+              <div key={idx + 'card'}>
+                <img src={`/cards/${e.rank}_of_${e.suit}s.svg`} alt="card" />
+              </div>
+            );
+          })}
+        </div>
       </div>
     );
 
