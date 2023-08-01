@@ -49,11 +49,14 @@ export const HandDemo = () => {
   if (isLoading) return <div>loading...</div>;
   if (data)
     return (
-      <div>
-        <div>
-          <h1 className="">{hand?.name}</h1>
+      <>
+        <div className="flex justify-center mb-4">
+          <div className="underline decoration-sky-500 text-6xl">
+            {hand?.name}
+          </div>
         </div>
-        <div className="flex">
+
+        <div className="flex justify-center">
           {data.map((e, idx) => {
             return (
               <div key={idx + 'card'}>
@@ -62,7 +65,7 @@ export const HandDemo = () => {
             );
           })}
         </div>
-      </div>
+      </>
     );
 
   return <div>failed to load</div>;
