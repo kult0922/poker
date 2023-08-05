@@ -8,7 +8,7 @@ import (
 	"os"
 
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/kult0922/go-react-blog/backend/api"
+	"github.com/kult0922/poker/backend/api"
 )
 
 var (

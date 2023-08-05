@@ -1,12 +1,53 @@
-package models
+package hand
 
 import (
+	"fmt"
 	"sort"
 
-	"github.com/kult0922/go-react-blog/backend/util"
+	"github.com/kult0922/poker/backend/domain/models"
+	"github.com/kult0922/poker/backend/util"
 )
 
-func HandName(cards [5]Card) string {
+func HandRank(rankMap map[int]int, rankMapFlush map[int]int, cards [5]models.Card, handName string) int {
+	sort.Slice(cards[:], func(i, j int) bool {
+		return cards[i].Rank < cards[j].Rank
+	})
+
+	primeMap := map[int]int{
+		2:  2,
+		3:  3,
+		4:  5,
+		5:  7,
+		6:  11,
+		7:  13,
+		8:  17,
+		9:  19,
+		10: 23,
+		11: 29,
+		12: 31,
+		13: 37,
+		1:  41,
+	}
+
+	hash := primeMap[cards[0].Rank] * primeMap[cards[1].Rank] * primeMap[cards[2].Rank] *
+		primeMap[cards[3].Rank] * primeMap[cards[4].Rank]
+
+	fmt.Println("hash", hash)
+
+	switch handName {
+	case "RoyalFlush":
+		return rankMapFlush[hash]
+	case "StraightFlush":
+		return rankMapFlush[hash]
+	case "Flush":
+		return rankMapFlush[hash]
+	default:
+		fmt.Println("default")
+		return rankMap[hash]
+	}
+}
+
+func HandName(cards [5]models.Card) string {
 	if IsRoyalFlush(cards) {
 		return "RoyalFlush"
 	}
@@ -46,7 +87,7 @@ func HandName(cards [5]Card) string {
 	return "HighCard"
 }
 
-func IsRoyalFlush(cards [5]Card) bool {
+func IsRoyalFlush(cards [5]models.Card) bool {
 	sort.Slice(cards[:], func(i, j int) bool {
 		return cards[i].Rank < cards[j].Rank
 	})
@@ -63,7 +104,7 @@ func IsRoyalFlush(cards [5]Card) bool {
 	return true
 }
 
-func IsStraightFlush(cards [5]Card) bool {
+func IsStraightFlush(cards [5]models.Card) bool {
 	if IsFlush(cards) && IsStraight(cards) {
 		return true
 	}
@@ -71,7 +112,7 @@ func IsStraightFlush(cards [5]Card) bool {
 	return false
 }
 
-func IsQuads(cards [5]Card) bool {
+func IsQuads(cards [5]models.Card) bool {
 	sort.Slice(cards[:], func(i, j int) bool {
 		return cards[i].Rank < cards[j].Rank
 	})
@@ -89,7 +130,7 @@ func IsQuads(cards [5]Card) bool {
 	return false
 }
 
-func IsFullHouse(cards [5]Card) bool {
+func IsFullHouse(cards [5]models.Card) bool {
 	sort.Slice(cards[:], func(i, j int) bool {
 		return cards[i].Rank < cards[j].Rank
 	})
@@ -107,12 +148,12 @@ func IsFullHouse(cards [5]Card) bool {
 	return false
 }
 
-func IsFlush(cards [5]Card) bool {
+func IsFlush(cards [5]models.Card) bool {
 	firstSuit := cards[0].Suit
-	return util.All(func(c Card) bool { return c.Suit == firstSuit }, cards[:])
+	return util.All(func(c models.Card) bool { return c.Suit == firstSuit }, cards[:])
 }
 
-func IsStraight(cards [5]Card) bool {
+func IsStraight(cards [5]models.Card) bool {
 	sort.Slice(cards[:], func(i, j int) bool {
 		return cards[i].Rank < cards[j].Rank
 	})
@@ -132,7 +173,7 @@ func IsStraight(cards [5]Card) bool {
 	return true
 }
 
-func IsTrips(cards [5]Card) bool {
+func IsTrips(cards [5]models.Card) bool {
 	sort.Slice(cards[:], func(i, j int) bool {
 		return cards[i].Rank < cards[j].Rank
 	})
@@ -152,7 +193,7 @@ func IsTrips(cards [5]Card) bool {
 	return false
 }
 
-func IsTwoPair(cards [5]Card) bool {
+func IsTwoPair(cards [5]models.Card) bool {
 	sort.Slice(cards[:], func(i, j int) bool {
 		return cards[i].Rank < cards[j].Rank
 	})
@@ -172,7 +213,7 @@ func IsTwoPair(cards [5]Card) bool {
 	return false
 }
 
-func IsPair(cards [5]Card) bool {
+func IsPair(cards [5]models.Card) bool {
 	sort.Slice(cards[:], func(i, j int) bool {
 		return cards[i].Rank < cards[j].Rank
 	})

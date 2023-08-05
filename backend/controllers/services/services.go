@@ -1,6 +1,6 @@
 package services
 
-import "github.com/kult0922/go-react-blog/backend/models"
+import "github.com/kult0922/poker/backend/domain/models"
 
 type HandServicer interface {
 	GetHandService(cards [5]models.Card) models.Hand

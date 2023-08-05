@@ -1,23 +1,25 @@
-package models
+package deal
 
 import (
 	"math/rand"
 	"time"
+
+	"github.com/kult0922/poker/backend/domain/models"
 )
 
-func CommunityCard() [5]Card {
+func CommunityCard() [5]models.Card {
 
-	var communityCard []Card
+	var communityCard []models.Card
 
 	for i := 0; i < 5; i++ {
 		communityCard = append(communityCard, Draw(communityCard))
 	}
 
-	return [5]Card(communityCard)
+	return [5]models.Card(communityCard)
 }
 
-func Draw(exclusionCards []Card) Card {
-	stock := []Card{
+func Draw(exclusionCards []models.Card) models.Card {
+	stock := []models.Card{
 		{Suit: "spade", Rank: 1},
 		{Suit: "spade", Rank: 2},
 		{Suit: "spade", Rank: 3},

@@ -1,4 +1,4 @@
-module github.com/kult0922/go-react-blog/backend
+module github.com/kult0922/poker/backend
 
 go 1.20
 

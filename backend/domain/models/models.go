@@ -8,4 +8,5 @@ type Card struct {
 type Hand struct {
 	Cards [5]Card `json:"cards"`
 	Name  string  `json:"name"`
+	Rank  int     `json:"rank"`
 }

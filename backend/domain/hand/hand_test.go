@@ -1,9 +1,10 @@
-package models_test
+package hand_test
 
 import (
 	"testing"
 
-	"github.com/kult0922/go-react-blog/backend/models"
+	"github.com/kult0922/poker/backend/domain/hand"
+	"github.com/kult0922/poker/backend/domain/models"
 )
 
 func TestHandName(t *testing.T) {
@@ -137,7 +138,7 @@ func TestHandName(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := models.HandName(tt.args); got != tt.want {
+			if got := hand.HandName(tt.args); got != tt.want {
 				t.Errorf("GetHandService() = %v, want %v", got, tt.want)
 			}
 		})

@@ -3,10 +3,11 @@ package services_test
 import (
 	"testing"
 
-	"github.com/kult0922/go-react-blog/backend/models"
-	"github.com/kult0922/go-react-blog/backend/services"
+	"github.com/kult0922/poker/backend/domain/models"
+	"github.com/kult0922/poker/backend/services"
 )
 
+// rankがレスポンスに追加されたのでこのテストは動かなくなる
 func TestGetHandService(t *testing.T) {
 	tests := []struct {
 		name string

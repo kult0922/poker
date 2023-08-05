@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/kult0922/go-react-blog/backend/controllers/services"
+	"github.com/kult0922/poker/backend/controllers/services"
 )
 
 type DealController struct {

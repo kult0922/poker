@@ -6,7 +6,6 @@ import (
 
 func Cors(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
-		println("cors")
 		w.Header().Set("Access-Control-Allow-Origin", "*")
 		w.Header().Set("Access-Control-Allow-Headers", "*")
 		// w.Header().Set("Access-Control-Allow-Headers", "Content-Type")

@@ -9,6 +9,7 @@ type Card = {
 type Hand = {
   cards: Card[];
   name: string;
+  rank: number;
 };
 
 const getHandName = (url: string, card: Card[]): Promise<Hand> =>
@@ -53,6 +54,12 @@ export const HandDemo = () => {
         <div className="flex justify-center mb-4">
           <div className="underline decoration-sky-500 text-6xl">
             {hand?.name}
+          </div>
+        </div>
+
+        <div className="flex justify-center mb-4">
+          <div className="underline decoration-emerald-400 text-4xl">
+            {hand?.rank}
           </div>
         </div>
 

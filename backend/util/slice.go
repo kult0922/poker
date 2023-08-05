@@ -8,3 +8,11 @@ func All[T comparable](f func(T) bool, ary []T) bool {
 	}
 	return true
 }
+
+func Map[T comparable](f func(T) T, ary []T) []T {
+	for i, _ := range ary {
+		ary[i] = f(ary[i])
+	}
+
+	return ary
+}

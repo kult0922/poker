@@ -5,9 +5,9 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	"github.com/kult0922/go-react-blog/backend/api/middlewares"
-	"github.com/kult0922/go-react-blog/backend/controllers"
-	"github.com/kult0922/go-react-blog/backend/services"
+	"github.com/kult0922/poker/backend/api/middlewares"
+	"github.com/kult0922/poker/backend/controllers"
+	"github.com/kult0922/poker/backend/services"
 )
 
 func NewRouter(db *sql.DB) *mux.Router {

@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/kult0922/go-react-blog/backend/apperrors"
-	"github.com/kult0922/go-react-blog/backend/controllers/services"
-	"github.com/kult0922/go-react-blog/backend/models"
+	"github.com/kult0922/poker/backend/apperrors"
+	"github.com/kult0922/poker/backend/controllers/services"
+	"github.com/kult0922/poker/backend/domain/models"
 )
 
 type HandController struct {
