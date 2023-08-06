@@ -21,7 +21,6 @@ var (
 func main() {
 	db, err := sql.Open("mysql", dbConn)
 	if err != nil {
-		log.Println("fail to connect DB")
 		return
 	}
 

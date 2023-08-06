@@ -6,11 +6,9 @@ import (
 )
 
 func (s *MyAppService) GetHandService(cards [5]models.Card) models.Hand {
-	handName := hand.HandName(cards)
-
 	return models.Hand{
 		Cards: cards,
-		Name:  handName,
-		Rank:  hand.HandRank(s.rankMap, s.rankMapFlush, cards, handName),
+		Name:  hand.HandName(cards),
+		Rank:  hand.HandRank(s.rankMap, s.rankMapFlush, cards),
 	}
 }

@@ -24,8 +24,7 @@ func SevenCardsHandRank(rankMap map[int]int, rankMapFlush map[int]int, cards [7]
 							cards[l],
 							cards[m],
 						}
-						HandName := HandName(hand)
-						handRank = util.Min(handRank, HandRank(rankMap, rankMapFlush, hand, HandName))
+						handRank = util.Min(handRank, HandRank(rankMap, rankMapFlush, hand))
 					}
 				}
 			}
@@ -35,10 +34,7 @@ func SevenCardsHandRank(rankMap map[int]int, rankMapFlush map[int]int, cards [7]
 	return handRank
 }
 
-func HandRank(rankMap map[int]int, rankMapFlush map[int]int, cards [5]models.Card, handName string) int {
-	sort.Slice(cards[:], func(i, j int) bool {
-		return cards[i].Rank < cards[j].Rank
-	})
+func HandRank(rankMap map[int]int, rankMapFlush map[int]int, cards [5]models.Card) int {
 
 	primeMap := map[int]int{
 		2:  2,
@@ -59,16 +55,11 @@ func HandRank(rankMap map[int]int, rankMapFlush map[int]int, cards [5]models.Car
 	hash := primeMap[cards[0].Rank] * primeMap[cards[1].Rank] * primeMap[cards[2].Rank] *
 		primeMap[cards[3].Rank] * primeMap[cards[4].Rank]
 
-	switch handName {
-	case "RoyalFlush":
+	if IsFlush(cards) {
 		return rankMapFlush[hash]
-	case "StraightFlush":
-		return rankMapFlush[hash]
-	case "Flush":
-		return rankMapFlush[hash]
-	default:
-		return rankMap[hash]
 	}
+
+	return rankMap[hash]
 }
 
 func HandName(cards [5]models.Card) string {
@@ -173,8 +164,20 @@ func IsFullHouse(cards [5]models.Card) bool {
 }
 
 func IsFlush(cards [5]models.Card) bool {
-	firstSuit := cards[0].Suit
-	return util.All(func(c models.Card) bool { return c.Suit == firstSuit }, cards[:])
+	if cards[0].Suit != cards[1].Suit {
+		return false
+	}
+	if cards[0].Suit != cards[2].Suit {
+		return false
+	}
+	if cards[0].Suit != cards[3].Suit {
+		return false
+	}
+	if cards[0].Suit != cards[4].Suit {
+		return false
+	}
+
+	return true
 }
 
 func IsStraight(cards [5]models.Card) bool {

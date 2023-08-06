@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	"github.com/kult0922/poker/backend/controllers/services"
@@ -17,8 +16,6 @@ func NewAnalyticsController(s services.AnalyticsServicer) *AnalyticsController {
 }
 
 func (c *AnalyticsController) PreflopHandRangeHandler(w http.ResponseWriter, req *http.Request) {
-	fmt.Println("PreflopHandRangeHandler")
-
 	preflopHandRange := c.service.GetPreflopHandRange()
 
 	json.NewEncoder(w).Encode(preflopHandRange)

@@ -1,10 +1,9 @@
 package analytics
 
 import (
-	"fmt"
-
 	"github.com/kult0922/poker/backend/domain/hand"
 	"github.com/kult0922/poker/backend/domain/models"
+	"github.com/kult0922/poker/backend/util"
 )
 
 func CalcPreflopRank(rankMap map[int]int, rankMapFlush map[int]int) map[string]int {
@@ -12,7 +11,6 @@ func CalcPreflopRank(rankMap map[int]int, rankMapFlush map[int]int) map[string]i
 
 	for i := 1; i <= 13; i++ {
 		for j := 1; j <= 13; j++ {
-			fmt.Println("calc...", i, j)
 			startingHand := [2]models.Card{
 				{Suit: "unknown", Rank: i},
 				{Suit: "unknown", Rank: j},
@@ -47,21 +45,24 @@ func CalcPreflopRank(rankMap map[int]int, rankMapFlush map[int]int) map[string]i
 
 func CalcStartingHandRank(rankMap map[int]int, rankMapFlush map[int]int, startingHand [2]models.Card) int {
 	stock := models.GetStock()
+
+	// 2枚のカードを除外
 	for i, card := range stock {
-		if card == startingHand[0] || card == startingHand[1] {
-			stock = append(stock[:i], stock[i+1:]...)
+		if card == startingHand[0] {
+			stock = util.Remove(i, stock)
+		}
+	}
+	for i, card := range stock {
+		if card == startingHand[1] {
+			stock = util.Remove(i, stock)
 		}
 	}
 
 	totalRank := 0
 
 	len := len(stock)
-	fmt.Println("len", len)
-
-	t := 0
 
 	for i := 0; i < len-4; i++ {
-		fmt.Println("i", i)
 		for j := i + 1; j < len-3; j++ {
 			for k := j + 1; k < len-2; k++ {
 				for l := k + 1; l < len-1; l++ {
@@ -75,14 +76,12 @@ func CalcStartingHandRank(rankMap map[int]int, rankMapFlush map[int]int, startin
 							startingHand[0],
 							startingHand[1],
 						}
-						t += 1
 						totalRank += hand.SevenCardsHandRank(rankMap, rankMapFlush, sevenCards)
 					}
 				}
 			}
 		}
 	}
-	fmt.Println("t", t)
 
 	return totalRank
 }
