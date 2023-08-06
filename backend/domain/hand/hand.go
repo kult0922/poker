@@ -1,12 +1,39 @@
 package hand
 
 import (
-	"fmt"
 	"sort"
 
 	"github.com/kult0922/poker/backend/domain/models"
 	"github.com/kult0922/poker/backend/util"
 )
+
+func SevenCardsHandRank(rankMap map[int]int, rankMapFlush map[int]int, cards [7]models.Card) int {
+	len := 7
+
+	var handRank = 999999
+
+	for i := 0; i < len-4; i++ {
+		for j := i + 1; j < len-3; j++ {
+			for k := j + 1; k < len-2; k++ {
+				for l := k + 1; l < len-1; l++ {
+					for m := l + 1; m < len; m++ {
+						hand := [5]models.Card{
+							cards[i],
+							cards[j],
+							cards[k],
+							cards[l],
+							cards[m],
+						}
+						HandName := HandName(hand)
+						handRank = util.Min(handRank, HandRank(rankMap, rankMapFlush, hand, HandName))
+					}
+				}
+			}
+		}
+	}
+
+	return handRank
+}
 
 func HandRank(rankMap map[int]int, rankMapFlush map[int]int, cards [5]models.Card, handName string) int {
 	sort.Slice(cards[:], func(i, j int) bool {
@@ -32,8 +59,6 @@ func HandRank(rankMap map[int]int, rankMapFlush map[int]int, cards [5]models.Car
 	hash := primeMap[cards[0].Rank] * primeMap[cards[1].Rank] * primeMap[cards[2].Rank] *
 		primeMap[cards[3].Rank] * primeMap[cards[4].Rank]
 
-	fmt.Println("hash", hash)
-
 	switch handName {
 	case "RoyalFlush":
 		return rankMapFlush[hash]
@@ -42,7 +67,6 @@ func HandRank(rankMap map[int]int, rankMapFlush map[int]int, cards [5]models.Car
 	case "Flush":
 		return rankMapFlush[hash]
 	default:
-		fmt.Println("default")
 		return rankMap[hash]
 	}
 }

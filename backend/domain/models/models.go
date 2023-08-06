@@ -1,8 +1,46 @@
 package models
 
+import "strconv"
+
 type Card struct {
 	Suit string `json:"suit"`
 	Rank int    `json:"rank"`
+}
+
+func (self Card) Greater(card Card) bool {
+	a := self.Rank
+	b := card.Rank
+
+	if a == 1 {
+		a = 14
+	}
+	if b == 1 {
+		b = 14
+	}
+
+	return a > b
+}
+
+func (self Card) Equal(card Card) bool {
+	a := self.Rank
+	b := card.Rank
+
+	return a == b
+}
+
+func (c Card) RankString() string {
+	switch c.Rank {
+	case 1:
+		return "A"
+	case 11:
+		return "J"
+	case 12:
+		return "Q"
+	case 13:
+		return "K"
+	default:
+		return strconv.Itoa(c.Rank)
+	}
 }
 
 type Hand struct {

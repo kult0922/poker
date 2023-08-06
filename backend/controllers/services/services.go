@@ -9,3 +9,7 @@ type HandServicer interface {
 type DealServicer interface {
 	GetCommunityCardService() [5]models.Card
 }
+
+type AnalyticsServicer interface {
+	GetPreflopHandRange() map[string]int
+}
